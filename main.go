@@ -27,8 +27,6 @@ func makeTestFixtureFilePath(partyIndex int) string {
 }
 
 func main() {
-	fmt.Println("Hello, Go!")
-
 	qty := 3
 	testThreshold := 2
 	keys := make([]keygen.LocalPartySaveData, 0, qty)
