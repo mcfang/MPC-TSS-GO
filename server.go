@@ -68,13 +68,13 @@ func serverRun(partyIDs tss.UnSortedPartyIDs, keys []keygen.LocalPartySaveData) 
 
 	// PHASE: keygen
 	var ended int32
-keygen:
+keygenServer:
 	for {
 		fmt.Printf("ACTIVE GOROUTINES: %d\n", runtime.NumGoroutine())
 		select {
 		case err := <-errCh:
 			common.Logger.Errorf("Error: %s", err)
-			break keygen
+			break keygenServer
 
 		case msg := <-outCh:
 			dest := msg.GetTo()
@@ -102,7 +102,7 @@ keygen:
 			if atomic.LoadInt32(&ended) == int32(len(pIDs)) {
 				fmt.Printf("Done. Received save data from %d participants", ended)
 				fmt.Printf("Start goroutines: %d, End goroutines: %d", startGR, runtime.NumGoroutine())
-				break keygen
+				break keygenServer
 			}
 		}
 	}
